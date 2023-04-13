@@ -1,0 +1,141 @@
+% Copyright 2023 by samcarter
+%
+% This file may be distributed and/or modified
+% under the LaTeX Project Public License 1.3c or later
+
+\mode<presentation>
+
+\colorlet{themecolor}{beamer@blendedblue}
+\definecolor{samred}{RGB}{205,38,38}
+\definecolor{samteal}{RGB}{33, 135, 138}
+\colorlet{samblue}{beamer@blendedblue!75!black}
+
+\DeclareOptionBeamer{themecolor}{\colorlet{themecolor}{#1}}
+\ProcessOptionsBeamer
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% packages
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}% for the | in the footline
+\usepackage[most]{tcolorbox} % for tcblistings
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% base themes 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\useinnertheme{rounded}
+\useinnertheme{rectangles}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% colour
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\colorlet{beamer@blendedblue}{themecolor}
+\setbeamercolor{title}{bg=themecolor,fg=white}
+\setbeamercolor{frametitle}{bg=themecolor,fg=white}
+\setbeamercolor{title in head/foot}{bg=,fg=gray}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% fonts
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamerfont{title}{series=\bfseries}
+\setbeamerfont{frametitle}{series=\bfseries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% theme settings
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{navigation symbols}{}
+\beamer@onlytextwidthtrue
+\geometry{papersize={16.00cm,9.00cm}}
+
+% footline
+\setbeamertemplate{page number in head/foot}[pagenumber]
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}{title in head/foot}
+    \usebeamerfont{title in head/foot}
+    \quad
+    \ifx\insertdate\empty\else        
+      \insertshortdate\hfill|\hfill
+    \fi
+    \ifx\insertauthor\empty\else
+      \insertshortauthor\hfill|\hfill
+    \fi
+    \ifx\insertinstitute\empty\else
+      \insertshortinstitute\hfill|\hfill
+    \fi
+    \insertshorttitle\hfill|\hfill
+    \makebox[0.4cm][r]{\usebeamertemplate{page number in head/foot}}
+    \quad\hspace*{0pt}
+    \vskip2pt
+  \end{beamercolorbox}
+}
+
+% headline
+\setbeamertemplate{headline}{}
+
+% frametitle
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[sep=0cm,wd=\paperwidth,leftskip=\beamer@leftmargin,rightskip=\beamer@rightmargin]{frametitle}%
+    \begin{minipage}[t][1.7cm][c]{\textwidth}%
+      \usebeamerfont{frametitle}%
+      \strut\insertframetitle%
+    \end{minipage}%
+  \end{beamercolorbox}%
+}
+
+% patch title page to add more spce before the author
+\AddToHook{cmd/insertauthor/before}{\vskip0.5cm}
+
+% adding parskips to note page
+\setbeamertemplate{note page}{\setlength{\parskip}{\baselineskip}\insertnote}
+
+% conditionally show notes
+% compile with
+%% !TeX program = latexmk -pdf -interaction=nonstopmode -synctex=1 -jobname=% -pretex="\newif\ifnotes \notesfalse" -usepretex % | latexmk -pdf -interaction=nonstopmode -synctex=1 -jobname=%_notes -pretex="\newif\ifnotes \notestrue" -usepretex % | txs:///view-log | txs:///view-pdf "?am).pdf"
+\@ifundefined{ifnotes}{}{
+\ifnotes
+  \usepackage{pgfpages}
+  \pgfpagesuselayout{rounded corners}[corner width=0pt]
+  \setbeameroption{show notes on second screen}
+\fi
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% listings
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% use backticks for inline code
+\AtBeginDocument{\lstMakeShortInline`}
+
+\def\beginlstdelim#1#2#3%
+{%
+    \def\endlstdelim{#2\egroup}%
+    \ttfamily#1\bgroup\color{#3}\aftergroup\endlstdelim%
+}
+
+\lstdefinestyle{sam}{%
+	language={[latex]TeX},
+	tabsize=2,
+	breaklines,
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+}
+
+\tcbset{listing options={style=sam}}
+\lstset{style=sam}
+
+\mode
+<all>
