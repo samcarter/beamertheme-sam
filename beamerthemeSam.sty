@@ -13,9 +13,13 @@
 \newcommand\sectiongraphic[1]{\def\insertsectiongraphic{#1}}
 \sectiongraphic{}
 
+\newif\ifallnotes
+\allnotesfalse
+
 \DeclareOptionBeamer{themecolor}{\colorlet{themecolor}{#1}}
 \DeclareOptionBeamer{titlegraphic}{\titlegraphic{#1}}
 \DeclareOptionBeamer{sectiongraphic}{\sectiongraphic{#1}}
+\DeclareOptionBeamer{allnotes}{\allnotestrue}
 \ProcessOptionsBeamer
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -69,6 +73,7 @@
 \setbeamertemplate{navigation symbols}{}
 \beamer@onlytextwidthtrue
 \geometry{papersize={16.00cm,9.00cm}}
+\def\insertaspectratio{169}
 
 % footline
 \setbeamertemplate{page number in head/foot}[pagenumber]
@@ -142,31 +147,49 @@
 }
 
 % section page
-\AtBeginSection[]{
-  \begin{frame}[plain]
-    \begin{tikzpicture}[remember picture,overlay]
-      \fill[themecolor] ([yshift=-2.5cm]current page.north west) rectangle (current page.north east);
-      \ifx\insertsectiongraphic\empty\else
-        \node[anchor=south] at ([yshift=-2.35cm]current page.north) {\includegraphics[width=\paperwidth]{\insertsectiongraphic}};
-      \fi 
-    \node[anchor=north west,text width=\textwidth] at ([xshift=\beamer@leftmargin,yshift=-3.75cm]current page.north west) {
-        \usebeamercolor[fg]{section}\usebeamerfont{section}\insertsection\par
-    };      
-    \end{tikzpicture}
-  \end{frame}
+\setbeamertemplate{section page}{
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[themecolor] ([yshift=-2.5cm]current page.north west) rectangle (current page.north east);
+    \ifx\insertsectiongraphic\empty\else
+      \node[anchor=south] at ([yshift=-2.35cm]current page.north) {\includegraphics[width=\paperwidth]{\insertsectiongraphic}};
+    \fi 
+  \node[anchor=north west,text width=\textwidth] at ([xshift=\beamer@leftmargin,yshift=-3.75cm]current page.north west) {
+      \usebeamercolor[fg]{section}\usebeamerfont{section}\insertsection\par
+  };      
+  \end{tikzpicture}
 }
 
 % adding parskips to note page
 \setbeamertemplate{note page}{\setlength{\parskip}{\baselineskip}\insertnote}
+
+% make sure even empty notes are created
+\ifallnotes
+  \def\beamer@framenotesbegin{%	at beginning of slide 	
+    \gdef\beamer@noteitems{}% 	
+    \gdef\beamer@notes{{}}%	used to be totally	empty. 
+  }
+\fi
 
 % conditionally show notes
 % compile with
 %% !TeX program = latexmk -pdf -interaction=nonstopmode -synctex=1 -jobname=% -pretex="\newif\ifnotes \notesfalse" -usepretex % | latexmk -pdf -interaction=nonstopmode -synctex=1 -jobname=%_notes -pretex="\newif\ifnotes \notestrue" -usepretex % | txs:///view-log | txs:///view-pdf "?am).pdf"
 \@ifundefined{ifnotes}{}{
 \ifnotes
+  \setbeameroption{show notes}
   \usepackage{pgfpages}
-  \pgfpagesuselayout{rounded corners}[corner width=0pt]
-  \setbeameroption{show notes on second screen}
+  \pgfpageslogicalpageoptions{1}{corner width=0pt}
+  \pgfpageslogicalpageoptions{2}{corner width=0pt}
+  \pgfpageslogicalpageoptions{3}{corner width=0pt}
+  \pgfpageslogicalpageoptions{4}{corner width=0pt}
+  \pgfpageslogicalpageoptions{5}{corner width=0pt}
+  \pgfpageslogicalpageoptions{6}{corner width=0pt}
+  \pgfpageslogicalpageoptions{7}{corner width=0pt}
+  \pgfpageslogicalpageoptions{8}{corner width=0pt}  
+  \ifnum\insertaspectratio=169 
+    \pgfpagesuselayout{8 on 1}[a4paper,border shrink=0.5cm]
+  \else
+    \pgfpagesuselayout{6 on 1}[a4paper]
+  \fi
 \fi
 }
 
