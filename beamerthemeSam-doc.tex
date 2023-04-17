@@ -2,9 +2,15 @@
 
 \usetheme[
   themecolor=blue!50!black,
-  titlegraphic=example-image-duck,
-  sectiongraphic=example-image-16x9,
+  titlegraphic=blueshade, % demo image included in tcolorbox
+  sectiongraphic=blueshade, % demo image included in tcolorbox
 ]{Sam}
+
+\AtBeginSection[]{
+  \begin{frame}
+    \usebeamertemplate{section page}
+  \end{frame}
+}
 
 \author{Author}
 \title{Title}
@@ -16,11 +22,10 @@
 \titlepage
 \end{frame}
 
-\section{title title title title title title title title title title title title title title title title title title title title title title title }
+\section{Section Title}
 
 \begin{frame}
-  \frametitle{frametitle}
-  abc
+  \frametitle{Frametitle}
   \begin{block}{title}
   content...
   \end{block}
