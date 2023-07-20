@@ -126,6 +126,13 @@
       \node[anchor=south] at ([yshift=2.65cm]current page.south) {\includegraphics[width=\paperwidth]{\inserttitlegraphic}};
     \fi
     \ifx\inserttitle\empty\else
+      \ifx\inserttitlegraphic\empty\else
+        \node[opacity=0.5,anchor=north west,text width=\textwidth] at ([yshift=-\beamer@leftmargin-0.15em,xshift=\beamer@leftmargin+0.1em]current page.north west) {%
+          \usebeamerfont*{title}%
+          \color{black}%
+          \inserttitle\par%
+        };    
+      \fi
       \node[anchor=north west,text width=\textwidth] at ([yshift=-\beamer@leftmargin,xshift=\beamer@leftmargin]current page.north west) {%
         \usebeamercolor[fg]{title}%
         \usebeamerfont*{title}%
