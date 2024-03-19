@@ -29,7 +29,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[T1]{fontenc}% for the | in the footline
 \usepackage{lmodern}
-\usepackage[most]{tcolorbox}% for tcblistings
+\usepackage{listings}
 \usepackage{tikz}% for title and section pages
 \graphicspath{{include}}
 
@@ -58,7 +58,7 @@
 % fonts
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setbeamerfont{title}{size=\huge,series=\bfseries}
+\setbeamerfont{title}{size=\Huge,series=\bfseries}
 \setbeamerfont{author}{size=\normalsize}
 \setbeamerfont{institute}{size=\normalsize}
 \setbeamerfont{date}{size=\normalsize}
@@ -76,7 +76,7 @@
 \def\insertaspectratio{169}
 
 % footline
-\setbeamertemplate{page number in head/foot}[pagenumber]
+\setbeamertemplate{page number in head/foot}[framenumber]
 \setbeamertemplate{footline}{%
   \begin{beamercolorbox}{title in head/foot}
     \usebeamerfont{title in head/foot}
@@ -127,15 +127,17 @@
     \fi
     \ifx\inserttitle\empty\else
       \ifx\inserttitlegraphic\empty\else
-        \node[opacity=0.5,anchor=north west,text width=\textwidth] at ([yshift=-\beamer@leftmargin-0.15em,xshift=\beamer@leftmargin+0.1em]current page.north west) {%
+        \node[opacity=0.5,anchor=north west,text width=\textwidth,align=flush left] at ([yshift=-\beamer@leftmargin-0.15em,xshift=\beamer@leftmargin+0.1em]current page.north west) {%
           \usebeamerfont*{title}%
           \color{black}%
+          % \fontdimen2\font=0.3em
           \inserttitle\par%
         };    
       \fi
-      \node[anchor=north west,text width=\textwidth] at ([yshift=-\beamer@leftmargin,xshift=\beamer@leftmargin]current page.north west) {%
+      \node[anchor=north west,text width=\textwidth,align=flush left] at ([yshift=-\beamer@leftmargin,xshift=\beamer@leftmargin]current page.north west) {%
         \usebeamercolor[fg]{title}%
         \usebeamerfont*{title}%
+        % \fontdimen2\font=0.3em
         \inserttitle\par%
       };
     \fi    
@@ -167,13 +169,16 @@
 }
 
 % adding parskips to note page
-\setbeamertemplate{note page}{\setlength{\parskip}{\baselineskip}\insertnote}
+\setbeamertemplate{note page}{%
+  \setlength{\parskip}{\baselineskip}%
+  \insertnote
+}
 
 % make sure even empty notes are created
 \ifallnotes
-  \def\beamer@framenotesbegin{%	at beginning of slide 	
-    \gdef\beamer@noteitems{}% 	
-    \gdef\beamer@notes{{}}%	used to be totally	empty. 
+  \def\beamer@framenotesbegin{% at beginning of slide
+    \gdef\beamer@noteitems{}%
+    \gdef\beamer@notes{{}}% used to be totally empty.
   }
 \fi
 
@@ -209,21 +214,26 @@
 % use backticks for inline code
 \AtBeginDocument{\lstMakeShortInline`}
 
-\def\beginlstdelim#1#2#3%
-{%
-    \def\endlstdelim{#2\egroup}%
-    \ttfamily#1\bgroup\color{#3}\aftergroup\endlstdelim%
+\colorlet{samlisting}{samteal!95!black}
+\lstdefinelanguage{samlatex}[LaTeX]{TeX}{
+  texcsstyle=*\color{samlisting}\bfseries,
+  commentstyle=\color{gray}\itshape,
+  tabsize=2,
+  moretexcs={usetheme,frametitle,setsansfont,setmathfont,usecolortheme,molochset,metroset,addtobeamertemplate,setbeamertemplate,tableofcontents,insertaspectratio,beamersidebarwidth,beamerheadheight},
+  literate=
+    {\{}{{\textcolor{samlisting}{\bfseries\{}}}{1}
+    {\}}{{\textcolor{samlisting}{\bfseries\}}}}{1}
+    {[}{{\textcolor{samlisting}{\bfseries[}}}{1}
+    {]}{{\textcolor{samlisting}{\bfseries]}}}{1}%
 }
 
 \lstdefinestyle{sam}{%
-	language={[latex]TeX},
-	tabsize=2,
-	breaklines,
-	basicstyle=\ttfamily,
-	columns=fullflexible,
+  language={samlatex},
+  tabsize=2,
+  breaklines,
+  basicstyle=\ttfamily,
+  columns=fullflexible,
 }
-
-\tcbset{listing options={style=sam}}
 \lstset{style=sam}
 
 \mode
