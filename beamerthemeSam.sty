@@ -9,6 +9,7 @@
 \definecolor{samred}{RGB}{205,38,38}
 \definecolor{samteal}{RGB}{0,146,142}
 \colorlet{samblue}{beamer@blendedblue!75!black}
+\colorlet{samlisting}{samteal!95!black}
 
 \newcommand\sectiongraphic[1]{\def\insertsectiongraphic{#1}}
 \sectiongraphic{}
@@ -17,6 +18,7 @@
 \allnotesfalse
 
 \DeclareOptionBeamer{themecolor}{\colorlet{themecolor}{#1}}
+\DeclareOptionBeamer{listingcolor}{\colorlet{samlisting}{#1}}
 \DeclareOptionBeamer{titlegraphic}{\titlegraphic{#1}}
 \DeclareOptionBeamer{sectiongraphic}{\sectiongraphic{#1}}
 \DeclareOptionBeamer{allnotes}{\allnotestrue}
@@ -214,25 +216,23 @@
 % use backticks for inline code
 \AtBeginDocument{\lstMakeShortInline`}
 
-\colorlet{samlisting}{samteal!95!black}
-\lstdefinelanguage{samlatex}[LaTeX]{TeX}{
-  texcsstyle=*\color{samlisting}\bfseries,
-  commentstyle=\color{gray}\itshape,
-  tabsize=2,
-  moretexcs={usetheme,frametitle,setsansfont,setmathfont,usecolortheme,molochset,metroset,addtobeamertemplate,setbeamertemplate,tableofcontents,insertaspectratio,beamersidebarwidth,beamerheadheight},
-  literate=
-    {\{}{{\textcolor{samlisting}{\bfseries\{}}}{1}
-    {\}}{{\textcolor{samlisting}{\bfseries\}}}}{1}
-    {[}{{\textcolor{samlisting}{\bfseries[}}}{1}
-    {]}{{\textcolor{samlisting}{\bfseries]}}}{1}%
-}
-
 \lstdefinestyle{sam}{%
-  language={samlatex},
+  language={[latex]TeX},
   tabsize=2,
   breaklines,
   basicstyle=\ttfamily,
   columns=fullflexible,
+  texcsstyle=*\color{samlisting}\bfseries,
+  commentstyle=\color{gray}\itshape,
+  tabsize=2,
+  moretexcs={
+    usetheme,frametitle,setsansfont,setmathfont,usecolortheme,molochset,metroset,addtobeamertemplate,setbeamertemplate,tableofcontents,insertaspectratio,beamersidebarwidth,beamerheadheight
+  },
+  literate=
+    {\{}{{\textcolor{samlisting}{\bfseries\{}}}{1}
+    {\}}{{\textcolor{samlisting}{\bfseries\}}}}{1}
+    {[}{{\textcolor{samlisting}{\bfseries[}}}{1}
+    {]}{{\textcolor{samlisting}{\bfseries]}}}{1}%  
 }
 \lstset{style=sam}
 
