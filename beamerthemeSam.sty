@@ -14,14 +14,14 @@
 \newcommand\sectiongraphic[1]{\def\insertsectiongraphic{#1}}
 \sectiongraphic{}
 
-\newif\ifallnotes
-\allnotesfalse
+\newif\ifhandout
+\handoutfalse
 
 \DeclareOptionBeamer{themecolor}{\colorlet{themecolor}{#1}}
 \DeclareOptionBeamer{listingcolor}{\colorlet{samlisting}{#1}}
 \DeclareOptionBeamer{titlegraphic}{\titlegraphic{#1}}
 \DeclareOptionBeamer{sectiongraphic}{\sectiongraphic{#1}}
-\DeclareOptionBeamer{allnotes}{\allnotestrue}
+\DeclareOptionBeamer{handout}{\handouttrue}
 \ProcessOptionsBeamer
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -176,33 +176,69 @@
   \insertnote
 }
 
-% make sure even empty notes are created
-\ifallnotes
-  \def\beamer@framenotesbegin{% at beginning of slide
-    \gdef\beamer@noteitems{}%
-    \gdef\beamer@notes{{}}% used to be totally empty.
-  }
-\fi
+% create a new environment for notes
+\NewDocumentEnvironment{notes}{D<>{.-} +b}{\note<#1>{#2}}{}
 
 % conditionally show notes
 % compile with
 %% !TeX program = latexmk -pdf -interaction=nonstopmode -synctex=1 -jobname=% -pretex="\newif\ifnotes \notesfalse" -usepretex % | latexmk -pdf -interaction=nonstopmode -synctex=1 -jobname=%_notes -pretex="\newif\ifnotes \notestrue" -usepretex % | txs:///view-log | txs:///view-pdf "?am).pdf"
+% or
+%% arara: latexmk: {
+%% arara: --> engine: pdflatex, 
+%% arara: --> options: [
+%% arara: -->    '-jobname=@{getBasename(getOriginalReference())}',
+%% arara: -->    '-synctex=1',
+%% arara: -->    '-interaction=nonstopmode',
+%% arara: -->    '-pretex="\\newif\\ifnotes \\notesfalse"',
+%% arara: -->    '-usepretex'
+%% arara: -->  ] 
+%% arara: --> }
+%% arara: latexmk: {
+%% arara: --> engine: pdflatex, 
+%% arara: --> options: [
+%% arara: -->    '-jobname=@{getBasename(getOriginalReference())}_notes',
+%% arara: -->    '-synctex=1',
+%% arara: -->    '-interaction=nonstopmode',
+%% arara: -->    '-pretex="\\newif\\ifnotes \\notestrue"',
+%% arara: -->    '-usepretex'
+%% arara: -->  ] 
+%% arara: --> }
 \@ifundefined{ifnotes}{}{
 \ifnotes
+
+  % always show notes, even if emoty
+  \def\beamer@framenotesbegin{% at beginning of slide
+    \gdef\beamer@noteitems{}%
+    \gdef\beamer@notes{{}}% used to be totally empty.
+  }
+
+  \RequirePackage{pgfpages}%
   \setbeameroption{show notes}
-  \usepackage{pgfpages}
-  \pgfpageslogicalpageoptions{1}{corner width=0pt}
-  \pgfpageslogicalpageoptions{2}{corner width=0pt}
-  \pgfpageslogicalpageoptions{3}{corner width=0pt}
-  \pgfpageslogicalpageoptions{4}{corner width=0pt}
-  \pgfpageslogicalpageoptions{5}{corner width=0pt}
-  \pgfpageslogicalpageoptions{6}{corner width=0pt}
-  \pgfpageslogicalpageoptions{7}{corner width=0pt}
-  \pgfpageslogicalpageoptions{8}{corner width=0pt}  
-  \ifnum\insertaspectratio=169 
-    \pgfpagesuselayout{8 on 1}[a4paper,border shrink=0.5cm]
+  
+  \ifhandout
+    \setbeameroption{show notes}
+    \pgfpageslogicalpageoptions{1}{border code=\pgfstroke,corner width=0pt}
+    \pgfpageslogicalpageoptions{2}{corner width=0pt}
+    \pgfpageslogicalpageoptions{3}{border code=\pgfstroke,corner width=0pt}
+    \pgfpageslogicalpageoptions{4}{corner width=0pt}
+    \pgfpageslogicalpageoptions{5}{border code=\pgfstroke,corner width=0pt}
+    \pgfpageslogicalpageoptions{6}{corner width=0pt}
+    \pgfpageslogicalpageoptions{7}{border code=\pgfstroke,corner width=0pt}
+    \pgfpageslogicalpageoptions{8}{corner width=0pt}  
+    \ifnum\insertaspectratio=169 
+      \pgfpagesuselayout{8 on 1}[a4paper,border shrink=0.5cm]
+    \else
+      \pgfpagesuselayout{6 on 1}[a4paper]
+    \fi
   \else
-    \pgfpagesuselayout{6 on 1}[a4paper]
+    \pgfpagesuselayout{2 on 1}[a4paper,border shrink=0.1cm]
+    \pgfpageslogicalpageoptions{1}{%
+      center=\pgfpoint{.5\pgfphysicalwidth}{.8\pgfphysicalheight},
+      corner width=0cm
+    }%
+    \pgfpageslogicalpageoptions{2}{%
+      center=\pgfpoint{.5\pgfphysicalwidth}{.4\pgfphysicalheight}%
+    }%
   \fi
 \fi
 }
@@ -215,6 +251,9 @@
 
 % use backticks for inline code
 \AtBeginDocument{\lstMakeShortInline`}
+
+% a new frame environemnt which allows to show frames in listings
+\newenvironment{verbframe}[1][]{\begin{frame}[environment=verbframe,#1]}{\end{frame}}
 
 \lstdefinestyle{sam}{%
   language={[latex]TeX},
