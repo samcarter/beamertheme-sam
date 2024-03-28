@@ -1,4 +1,36 @@
+% !TeX program = txs:///arara | txs:///view-log | txs:///view-pdf "?am).pdf"
+% !TEX spellcheck = de
+% arara: latexmk: {
+% arara: --> engine: pdflatex,
+% arara: --> options: [
+% arara: -->    '-jobname=@{getBasename(getOriginalReference())}',
+% arara: -->    '-synctex=1',
+% arara: -->    '-interaction=nonstopmode',
+% arara: -->    '-pretex="\\newif\\ifnotes \\notesfalse"',
+% arara: -->    '-usepretex'
+% arara: -->  ]
+% arara: --> }
+% arara: latexmk: {
+% arara: --> engine: pdflatex,
+% arara: --> options: [
+% arara: -->    '-jobname=@{getBasename(getOriginalReference())}_notes',
+% arara: -->    '-synctex=1',
+% arara: -->    '-interaction=nonstopmode',
+% arara: -->    '-pretex="\\newif\\ifnotes \\notestrue"',
+% arara: -->    '-usepretex'
+% arara: -->  ]
+% arara: --> }
 \documentclass{beamer}
+
+% add subfolder to search path to find theme
+%git submodule add git@github.com:samcarter/beamerthemeSam.git
+%git commit -am 'Add theme as submodule'
+%cd beamerthemeSam
+%git checkout <commit hash>
+\makeatletter
+\providecommand*{\input@path}{}
+\g@addto@macro\input@path{{./include/}{./beamerthemeSam/}}
+\makeatother
 
 \usetheme[
   themecolor=blue!50!black,

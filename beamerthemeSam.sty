@@ -1,4 +1,4 @@
-% Copyright 2023 by samcarter
+% Copyright 2023-2024 by samcarter
 %
 % This file may be distributed and/or modified
 % under the LaTeX Project Public License 1.3c or later
@@ -193,29 +193,6 @@
 \NewDocumentEnvironment{notes}{D<>{.-} +b}{\note<#1>{#2}}{}
 
 % conditionally show notes
-% compile with
-%% !TeX program = latexmk -pdf -interaction=nonstopmode -synctex=1 -jobname=% -pretex="\newif\ifnotes \notesfalse" -usepretex % | latexmk -pdf -interaction=nonstopmode -synctex=1 -jobname=%_notes -pretex="\newif\ifnotes \notestrue" -usepretex % | txs:///view-log | txs:///view-pdf "?am).pdf"
-% or
-%% arara: latexmk: {
-%% arara: --> engine: pdflatex, 
-%% arara: --> options: [
-%% arara: -->    '-jobname=@{getBasename(getOriginalReference())}',
-%% arara: -->    '-synctex=1',
-%% arara: -->    '-interaction=nonstopmode',
-%% arara: -->    '-pretex="\\newif\\ifnotes \\notesfalse"',
-%% arara: -->    '-usepretex'
-%% arara: -->  ] 
-%% arara: --> }
-%% arara: latexmk: {
-%% arara: --> engine: pdflatex, 
-%% arara: --> options: [
-%% arara: -->    '-jobname=@{getBasename(getOriginalReference())}_notes',
-%% arara: -->    '-synctex=1',
-%% arara: -->    '-interaction=nonstopmode',
-%% arara: -->    '-pretex="\\newif\\ifnotes \\notestrue"',
-%% arara: -->    '-usepretex'
-%% arara: -->  ] 
-%% arara: --> }
 \@ifundefined{ifnotes}{}{
 \ifnotes
 
