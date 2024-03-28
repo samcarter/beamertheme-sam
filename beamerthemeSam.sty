@@ -49,6 +49,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \colorlet{beamer@blendedblue}{themecolor}
 \setbeamercolor{title}{fg=white}
+\setbeamercolor{subtitle}{fg=white}
 \setbeamercolor{frametitle}{bg=themecolor,fg=white}
 \setbeamercolor{title in head/foot}{bg=,fg=gray}
 \setbeamercolor{block title}{bg=themecolor,fg=white}
@@ -61,6 +62,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamerfont{title}{size=\Huge,series=\bfseries}
+\setbeamerfont{subtitle}{size=\LARGE,series=\bfseries}
 \setbeamerfont{author}{size=\normalsize}
 \setbeamerfont{institute}{size=\normalsize}
 \setbeamerfont{date}{size=\normalsize}
@@ -134,6 +136,11 @@
           \color{black}%
           % \fontdimen2\font=0.3em
           \inserttitle\par%
+          \ifx\insertsubtitle\empty\else
+            \medskip
+            \usebeamerfont*{subtitle}%
+            \insertsubtitle\par
+          \fi
         };    
       \fi
       \node[anchor=north west,text width=\textwidth,align=flush left] at ([yshift=-\beamer@leftmargin,xshift=\beamer@leftmargin]current page.north west) {%
@@ -141,6 +148,12 @@
         \usebeamerfont*{title}%
         % \fontdimen2\font=0.3em
         \inserttitle\par%
+        \ifx\insertsubtitle\empty\else
+          \medskip
+          \usebeamercolor[fg]{subtitle}%
+          \usebeamerfont*{subtitle}%
+          \insertsubtitle\par
+        \fi        
       };
     \fi    
     \node[anchor=south west,text width=\textwidth,minimum height=2cm] at ([xshift=\beamer@leftmargin,yshift=0.25cm]current page.south west) {
