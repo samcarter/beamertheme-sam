@@ -183,9 +183,9 @@
     \ifx\insertsectiongraphic\empty\else
       \node[anchor=south] at ([yshift=-2.35cm]current page.north) {\includegraphics[width=\paperwidth]{\insertsectiongraphic}};
     \fi 
-  \node[anchor=north west,text width=\textwidth] at ([xshift=\beamer@leftmargin,yshift=-3.75cm]current page.north west) {
+    \node[anchor=north west,text width=\textwidth] at ([xshift=\beamer@leftmargin,yshift=-3.75cm]current page.north west) {
       \usebeamercolor[fg]{section}\usebeamerfont{section}\insertsection\par
-  };      
+    };      
   \end{tikzpicture}
 }
 
