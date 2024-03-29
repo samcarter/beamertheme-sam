@@ -13,6 +13,8 @@
 
 \newcommand\sectiongraphic[1]{\def\insertsectiongraphic{#1}}
 \sectiongraphic{}
+\newcommand\titlecredit[1]{\def\inserttitlecredit{#1}}
+\titlecredit{}
 
 \newif\ifhandout
 \handoutfalse
@@ -20,6 +22,7 @@
 \DeclareOptionBeamer{themecolor}{\colorlet{themecolor}{#1}}
 \DeclareOptionBeamer{listingcolor}{\colorlet{samlisting}{#1}}
 \DeclareOptionBeamer{titlegraphic}{\titlegraphic{#1}}
+\DeclareOptionBeamer{titlecredit}{\titlecredit{#1}}
 \DeclareOptionBeamer{sectiongraphic}{\sectiongraphic{#1}}
 \DeclareOptionBeamer{handout}{\handouttrue}
 \ProcessOptionsBeamer
@@ -167,6 +170,9 @@
         \usebeamercolor[fg]{date}\usebeamerfont{date}\insertdate\par
       \fi      
     };
+    \node[anchor=south east,font=\tiny,align=right,inner sep=0.15cm] at (current page.south east) {
+      \inserttitlecredit\par
+    };    
   \end{tikzpicture}
 }
 
