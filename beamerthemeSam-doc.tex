@@ -35,8 +35,6 @@
 \usetheme[
   themecolor=blue!50!black,
   listingcolor=samteal!95!black,
-  titlegraphic=blueshade,% demo image included in tcolorbox
-  sectiongraphic=blueshade,% demo image included in tcolorbox
   handout%  will produce a 6/8 on 1 handout if compiled with \newif\ifnotes \notestrue
 ]{sam}
 
@@ -46,8 +44,14 @@
   \end{frame}
 }
 
-\author{Author}
 \title{Title}
+\titlegraphic{blueshade}
+\titlecredit{
+  \scriptsize
+  Title graphic: Tcolorbox package
+}
+\sectiongraphic{blueshade}
+\author{Author}
 \institute{Institute}
 
 \begin{document}
