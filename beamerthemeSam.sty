@@ -211,16 +211,20 @@
 
   \RequirePackage{pgfpages}%
   \setbeameroption{show notes}
-  
+  \setbeamertemplate{background canvas}{
+    \begin{tikzpicture}[remember picture,overlay]
+      \draw (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}
+  }
+      
   \ifhandout
-    \setbeameroption{show notes}
-    \pgfpageslogicalpageoptions{1}{border code=\pgfstroke,corner width=0pt}
+    \pgfpageslogicalpageoptions{1}{corner width=0pt}
     \pgfpageslogicalpageoptions{2}{corner width=0pt}
-    \pgfpageslogicalpageoptions{3}{border code=\pgfstroke,corner width=0pt}
+    \pgfpageslogicalpageoptions{3}{corner width=0pt}
     \pgfpageslogicalpageoptions{4}{corner width=0pt}
-    \pgfpageslogicalpageoptions{5}{border code=\pgfstroke,corner width=0pt}
+    \pgfpageslogicalpageoptions{5}{corner width=0pt}
     \pgfpageslogicalpageoptions{6}{corner width=0pt}
-    \pgfpageslogicalpageoptions{7}{border code=\pgfstroke,corner width=0pt}
+    \pgfpageslogicalpageoptions{7}{corner width=0pt}
     \pgfpageslogicalpageoptions{8}{corner width=0pt}  
     \ifnum\insertaspectratio=169 
       \pgfpagesuselayout{8 on 1}[a4paper,border shrink=0.5cm]
