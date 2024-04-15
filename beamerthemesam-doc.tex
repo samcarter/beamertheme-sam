@@ -1,0 +1,85 @@
+% !TeX program = txs:///arara | txs:///view-log | txs:///view-pdf "?am).pdf"
+% !TEX spellcheck = de
+% arara: latexmk: {
+% arara: --> engine: pdflatex,
+% arara: --> options: [
+% arara: -->    '-jobname=@{getBasename(getOriginalReference())}',
+% arara: -->    '-synctex=1',
+% arara: -->    '-interaction=nonstopmode',
+% arara: -->    '-pretex="\\newif\\ifnotes \\notesfalse"',
+% arara: -->    '-usepretex'
+% arara: -->  ]
+% arara: --> }
+% arara: latexmk: {
+% arara: --> engine: pdflatex,
+% arara: --> options: [
+% arara: -->    '-jobname=@{getBasename(getOriginalReference())}_notes',
+% arara: -->    '-synctex=1',
+% arara: -->    '-interaction=nonstopmode',
+% arara: -->    '-pretex="\\newif\\ifnotes \\notestrue"',
+% arara: -->    '-usepretex'
+% arara: -->  ]
+% arara: --> }
+\documentclass{beamer}
+
+% add subfolder to search path to find theme
+% git submodule add git@github.com:samcarter/theme-sam.git
+% git commit -am 'Add theme as submodule'
+% cd theme-sam
+% git checkout <commit hash>
+\makeatletter
+\providecommand*{\input@path}{}
+\g@addto@macro\input@path{{./include/}{./theme-sam/}}
+\makeatother
+
+\usetheme[
+  %themecolor=samblue,
+  %listingcolor=samteal!95!black,
+  handout%  will produce a 6/8 on 1 handout if compiled with \newif\ifnotes \notestrue
+]{sam}
+
+\AtBeginSection[]{
+  \begin{frame}
+    \usebeamertemplate{section page}
+  \end{frame}
+}
+
+\title{Title}
+\titlegraphic{blueshade}
+\titlecredit{
+  \scriptsize
+  Title graphic: Tcolorbox package
+}
+\sectiongraphic{blueshade}
+\author{Author}
+\institute{Institute}
+
+% for colour sample
+\newcommand{\testcolor}[1]{%
+  \begingroup
+    \color{#1}%
+    \makebox[0cm][l]{\rule[-0.9cm]{2.3cm}{2cm}}%
+  \endgroup
+  \makebox[2.3cm][c]{#1}%
+}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Section Title}
+
+\begin{frame}
+  \frametitle{Predefined Colours}
+  \foreach \col in {samyellow,samorange,samred,sammagenta,samviolet,samlila,samdblue,samlblue,samteal,samlgreen,samdgreen,samlgray,samdgray}{
+    \testcolor{\col}%
+  }  
+\end{frame}
+
+\begin{frame}[standout]
+  Happy beaming!
+\end{frame}
+
+\end{document}

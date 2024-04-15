@@ -1,0 +1,321 @@
+% Copyright 2023-2024 by samcarter
+%
+% This file may be distributed and/or modified
+% under the LaTeX Project Public License 1.3c or later
+
+\mode<presentation>
+
+\definecolor{samyellow}{RGB}{246,193,65}
+\definecolor{samorange}{RGB}{241,147,45}
+\definecolor{samred}{RGB}{191,26,46}% TikZbricks
+\definecolor{sammagenta}{RGB}{170,42,104}% TikZmarmots
+\definecolor{samviolet}{RGB}{136,46,114}% TikZlings
+\definecolor{samlila}{RGB}{101,67,159}% Rainbow beamer theme
+\definecolor{samdblue}{RGB}{0,51,134}% TikZducks
+\definecolor{samlblue}{RGB}{22,89,155}
+\definecolor{samteal}{RGB}{25,143,157}% Tcolorbox beamer theme
+\definecolor{samlgreen}{RGB}{68,170,153}% Jigsaw
+\definecolor{samdgreen}{RGB}{78,178,125}
+\definecolor{samlgray}{RGB}{160,160,185}
+\definecolor{samdgray}{RGB}{60,60,85}
+\colorlet{themecolor}{samdblue}
+\colorlet{samlisting}{samteal!95!black}
+
+\apptocmd{\titlegraphic}{\def\insertsectiongraphic{#1}}{}{}
+\newcommand\sectiongraphic[1]{\def\insertsectiongraphic{#1}}
+\sectiongraphic{}
+\newcommand\titlecredit[1]{\def\inserttitlecredit{#1}}
+\titlecredit{}
+
+\newif\ifhandout
+\handoutfalse
+
+\DeclareOptionBeamer{themecolor}{\colorlet{themecolor}{#1}}
+\DeclareOptionBeamer{listingcolor}{\colorlet{samlisting}{#1}}
+\DeclareOptionBeamer{titlegraphic}{\titlegraphic{#1}}
+\DeclareOptionBeamer{titlecredit}{\titlecredit{#1}}
+\DeclareOptionBeamer{sectiongraphic}{\sectiongraphic{#1}}
+\DeclareOptionBeamer{handout}{\handouttrue}
+\ProcessOptionsBeamer
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% packages
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}% for the | in the footline
+\usepackage{lmodern}
+\usepackage{listings}
+\usepackage{tikz}% for title and section pages
+\graphicspath{{include}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% base themes 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\useinnertheme{rectangles}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% colour
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\colorlet{beamer@blendedblue}{themecolor}
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{subtitle}{fg=white}
+\setbeamercolor{frametitle}{bg=themecolor,fg=white}
+\setbeamercolor{title in head/foot}{bg=,fg=gray}
+\setbeamercolor{block title}{bg=themecolor,fg=white}
+\setbeamercolor{block body}{bg=themecolor!20}
+\setbeamercolor{alerted text}{fg=samred}
+\setbeamercolor{standout}{fg=samdgray}
+\setbeamercolor{section}{fg=samdgray}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% fonts
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamerfont{title}{size=\Huge,series=\bfseries}
+\setbeamerfont{subtitle}{size=\LARGE,series=\bfseries}
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{institute}{size=\normalsize}
+\setbeamerfont{date}{size=\normalsize}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamerfont{section}{size=\LARGE,series=\bfseries}
+\setbeamerfont{standout}{size=\Large,series=\bfseries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% theme settings
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{navigation symbols}{}
+\beamer@onlytextwidthtrue
+\geometry{papersize={16.00cm,9.00cm}}
+\def\insertaspectratio{169}
+
+% footline
+\setbeamertemplate{page number in head/foot}[framenumber]
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}{title in head/foot}
+    \usebeamerfont{title in head/foot}
+    \quad
+    \ifx\insertdate\empty\else        
+      \insertshortdate\hfill|\hfill
+    \fi
+    \ifx\insertauthor\empty\else
+      \insertshortauthor\hfill|\hfill
+    \fi
+    \ifx\insertshorttitle\empty\else
+      \insertshorttitle\hfill|\hfill
+    \fi    
+    \ifx\insertinstitute\empty\else
+      \insertshortinstitute\hfill|\hfill
+    \fi
+    \makebox[0.4cm][r]{\usebeamertemplate{page number in head/foot}}
+    \quad\hspace*{0pt}
+    \vskip2pt
+  \end{beamercolorbox}
+}
+
+% headline
+\setbeamertemplate{headline}{}
+
+% frametitle
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[sep=0cm,wd=\paperwidth,leftskip=\beamer@leftmargin,rightskip=\beamer@rightmargin]{frametitle}%
+    \begin{minipage}[t][1.7cm][c]{\textwidth}%
+      \usebeamerfont{frametitle}%
+      \strut\insertframetitle%
+    \end{minipage}%
+  \end{beamercolorbox}%
+}
+
+% title page
+\def\ps@navigation@titlepage{%
+  \setbeamertemplate{footline}{}%
+  \@nameuse{ps@navigation}%
+}
+\setbeamertemplate{title page}{%
+  \thispagestyle{navigation@titlepage}%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[themecolor] ([yshift=2.5cm]current page.south west) rectangle (current page.north east);    
+    \ifx\inserttitlegraphic\empty\else
+      \node[anchor=south] at ([yshift=2.65cm]current page.south) {\includegraphics[width=\paperwidth]{\inserttitlegraphic}};
+    \fi
+    \ifx\inserttitle\empty\else
+      \ifx\inserttitlegraphic\empty\else
+        \node[opacity=0.5,anchor=north west,text width=\textwidth,align=flush left] at ([yshift=-\beamer@leftmargin-0.15em,xshift=\beamer@leftmargin+0.1em]current page.north west) {%
+          \usebeamerfont*{title}%
+          \color{black}%
+          % \fontdimen2\font=0.3em
+          \inserttitle\par%
+          \ifx\insertsubtitle\empty\else
+            \medskip
+            \usebeamerfont*{subtitle}%
+            \insertsubtitle\par
+          \fi
+        };    
+      \fi
+      \node[anchor=north west,text width=\textwidth,align=flush left] at ([yshift=-\beamer@leftmargin,xshift=\beamer@leftmargin]current page.north west) {%
+        \usebeamercolor[fg]{title}%
+        \usebeamerfont*{title}%
+        % \fontdimen2\font=0.3em
+        \inserttitle\par%
+        \ifx\insertsubtitle\empty\else
+          \medskip
+          \usebeamercolor[fg]{subtitle}%
+          \usebeamerfont*{subtitle}%
+          \insertsubtitle\par
+        \fi        
+      };
+    \fi    
+    \node[anchor=south west,text width=\textwidth,minimum height=2cm] at ([xshift=\beamer@leftmargin,yshift=0.25cm]current page.south west) {
+      \expandafter\ifblank\expandafter{\beamer@andstripped}{}{%
+        \usebeamercolor[fg]{author}\usebeamerfont{author}\insertauthor\par\smallskip
+      }
+      \ifx\insertinstitute\@empty \else
+        \usebeamercolor[fg]{institute}\usebeamerfont{institute}\insertinstitute\par\smallskip
+      \fi
+      \ifx\insertdate\@empty \else
+        \usebeamercolor[fg]{date}\usebeamerfont{date}\insertdate\par
+      \fi      
+    };
+    \node[anchor=south east,font=\tiny,align=right,inner sep=0.15cm] at (current page.south east) {
+      \inserttitlecredit\par
+    };    
+  \end{tikzpicture}
+}
+
+% section page
+\setbeamertemplate{section page}{
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[themecolor] ([yshift=-2.5cm]current page.north west) rectangle (current page.north east);
+    \ifx\insertsectiongraphic\empty\else
+      \node[anchor=south] at ([yshift=-2.35cm]current page.north) {\includegraphics[width=\paperwidth]{\insertsectiongraphic}};
+    \fi 
+    \node[anchor=north west,text width=\textwidth] at ([xshift=\beamer@leftmargin,yshift=-3.75cm]current page.north west) {
+      \usebeamercolor[fg]{section}\usebeamerfont{section}\insertsection\par
+    };      
+  \end{tikzpicture}
+}
+
+% standout frame
+\providebool{sam@standout}
+\define@key{beamerframe}{standout}[true]{%
+  \booltrue{sam@standout}
+  \begingroup
+  \setbeamertemplate{headline}{
+    \begin{tikzpicture}[remember picture,overlay]
+      \fill[themecolor] ([yshift=-2.5cm]current page.north west) rectangle (current page.north east);
+      \ifx\insertsectiongraphic\empty\else
+        \node[anchor=south] at ([yshift=-2.35cm]current page.north) {\includegraphics[width=\paperwidth]{\insertsectiongraphic}};
+      \fi 
+    \end{tikzpicture}
+    \vskip2.5cm
+  }
+}
+\pretocmd{\beamer@reseteecodes}{%
+  \ifbool{sam@standout}{
+    \endgroup
+    \boolfalse{sam@standout}
+  }{}
+}{}{}
+\AtBeginEnvironment{beamer@frameslide}{
+  \ifbool{sam@standout}{%
+    \usebeamerfont{standout}%
+    \usebeamercolor[fg]{standout}%
+  }{}
+}
+
+% adding parskips to note page
+\setbeamertemplate{note page}{%
+  \setlength{\parskip}{\baselineskip}%
+  \insertnote
+}
+
+% create a new environment for notes
+\NewDocumentEnvironment{notes}{D<>{.-} +b}{\note<#1>{#2}}{}
+
+% conditionally show notes
+\@ifundefined{ifnotes}{}{
+\ifnotes
+
+  % always show notes, even if emoty
+  \def\beamer@framenotesbegin{% at beginning of slide
+    \gdef\beamer@noteitems{}%
+    \gdef\beamer@notes{{}}% used to be totally empty.
+  }
+
+  \RequirePackage{pgfpages}%
+  \setbeameroption{show notes}
+  \setbeamertemplate{background canvas}{
+    \begin{tikzpicture}[remember picture,overlay]
+      \draw (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}
+  }
+      
+  \ifhandout
+    \pgfpageslogicalpageoptions{1}{corner width=0pt}
+    \pgfpageslogicalpageoptions{2}{corner width=0pt}
+    \pgfpageslogicalpageoptions{3}{corner width=0pt}
+    \pgfpageslogicalpageoptions{4}{corner width=0pt}
+    \pgfpageslogicalpageoptions{5}{corner width=0pt}
+    \pgfpageslogicalpageoptions{6}{corner width=0pt}
+    \pgfpageslogicalpageoptions{7}{corner width=0pt}
+    \pgfpageslogicalpageoptions{8}{corner width=0pt}  
+    \ifnum\insertaspectratio=169 
+      \pgfpagesuselayout{8 on 1}[a4paper,border shrink=0.5cm]
+    \else
+      \pgfpagesuselayout{6 on 1}[a4paper]
+    \fi
+  \else
+    \pgfpagesuselayout{2 on 1}[a4paper,border shrink=0.1cm]
+    \pgfpageslogicalpageoptions{1}{%
+      center=\pgfpoint{.5\pgfphysicalwidth}{.8\pgfphysicalheight},
+      corner width=0cm
+    }%
+    \pgfpageslogicalpageoptions{2}{%
+      center=\pgfpoint{.5\pgfphysicalwidth}{.4\pgfphysicalheight}%
+    }%
+  \fi
+\fi
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% listings
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% use backticks for inline code
+\AtBeginDocument{\lstMakeShortInline`}
+
+% a new frame environemnt which allows to show frames in listings
+\newenvironment{verbframe}[1][]{\begin{frame}[environment=verbframe,#1]}{\end{frame}}
+
+\lstdefinestyle{sam}{%
+  language={[latex]TeX},
+  tabsize=2,
+  breaklines,
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  texcsstyle=*\color{samlisting}\bfseries,
+  commentstyle=\color{gray}\itshape,
+  tabsize=2,
+  moretexcs={
+    usetheme,frametitle,setsansfont,setmathfont,usecolortheme,molochset,metroset,addtobeamertemplate,setbeamertemplate,tableofcontents,insertaspectratio,beamersidebarwidth,beamerheadheight
+  },
+  literate=
+    {\{}{{\textcolor{samlisting}{\bfseries\{}}}{1}
+    {\}}{{\textcolor{samlisting}{\bfseries\}}}}{1}
+    {[}{{\textcolor{samlisting}{\bfseries[}}}{1}
+    {]}{{\textcolor{samlisting}{\bfseries]}}}{1}%  
+}
+\lstset{style=sam}
+
+\mode
+<all>
