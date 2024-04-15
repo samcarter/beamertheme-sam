@@ -1,0 +1,106 @@
+\ProvidesPackage{sam_doc_settings}[a helper theme for docs by samcarter]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Colours
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{xcolor}
+\definecolor{samyellow}{RGB}{246,193,65}
+\definecolor{samorange}{RGB}{241,147,45}
+\definecolor{samred}{RGB}{191,26,46}% TikZbricks
+\definecolor{sammagenta}{RGB}{170,42,104}% TikZmarmots
+\definecolor{samviolet}{RGB}{136,46,114}% TikZlings
+\definecolor{samlila}{RGB}{101,67,159}% Rainbow beamer theme
+\definecolor{samdblue}{RGB}{0,51,134}% TikZducks
+\definecolor{samlblue}{RGB}{22,89,155}
+\definecolor{samteal}{RGB}{25,143,157}% Tcolorbox beamer theme
+\definecolor{samlgreen}{RGB}{68,170,153}% Jigsaw
+\definecolor{samdgreen}{RGB}{78,178,125}
+\definecolor{samlgray}{RGB}{160,160,185}
+\definecolor{samdgray}{RGB}{60,60,85}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Package options
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{xkeyval}
+\DeclareOptionX{themecolor}[samdblue]{\colorlet{themecolor}{#1}}
+\ExecuteOptionsX{themecolor}
+\ProcessOptionsX
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Packages
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[T1]{fontenc}
+\RequirePackage[english]{babel}
+\RequirePackage[paper=a4paper,margin=2.9cm]{geometry}
+\RequirePackage{scrlayer-scrpage}
+\let\hrulefillx\hrulefill
+\RequirePackage[bitstream-charter]{mathdesign}
+\let\hrulefill\hrulefillx
+\RequirePackage[hang,flushmargin,bottom]{footmisc}
+\RequirePackage[colorlinks=true,breaklinks=true,allcolors=themecolor]{hyperref}
+\RequirePackage{xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Listings
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[cachedir=/tmp/mint]{minted}
+\usemintedstyle{vs}
+\setminted{
+  breakaftersymbolpre={},
+  tabsize=2,
+  breaklines=true
+}
+\newminted[samcode]{latex}{}
+\newmintinline[saminline]{latex}{}
+
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{minted}
+
+\tcbset{%
+  colframe=themecolor,
+  arc=2mm,
+  fonttitle=\bfseries,
+  sidebyside,
+  center lower,
+  righthand width=5.7cm,
+  bottom=2pt, 
+  top=2pt,
+  sidebyside gap=10pt,
+  lower separated=false,
+  listing engine=minted,
+  minted language=latex,
+  colback=themecolor!10
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% document settings
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtokomafont{sectioning}{\color{themecolor}}
+\addtokomafont{date}{\normalsize}
+\addtokomafont{author}{\normalsize}
+\setlength{\footnotemargin}{0.7em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Custom macros
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\CTAN}{\textsc{CTAN}\xspace}
+\newcommand{\TikZ}{Ti\emph{k}Z\xspace}
+\newcommand{\miktex}{MiK\TeX\xspace}
+\newcommand{\texlive}{\TeX{}Live\xspace}
+\newcommand{\tikzbrick}{Ti\emph{k}Zbrick\xspace}
+\newcommand{\tikzducks}{Ti\emph{k}Zducks\xspace}
+\newcommand{\tikzlings}{Ti\emph{k}Zlings\xspace}
+\newcommand{\tikzmarmots}{Ti\emph{k}Zmarmots\xspace}
+\newcommand{\ConTeXt}{C\kern-.0333emon\-\kern-.0667em\TeX\kern-.0333emt}

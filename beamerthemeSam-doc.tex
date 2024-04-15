@@ -23,18 +23,18 @@
 \documentclass{beamer}
 
 % add subfolder to search path to find theme
-%git submodule add git@github.com:samcarter/beamerthemeSam.git
-%git commit -am 'Add theme as submodule'
-%cd beamerthemeSam
-%git checkout <commit hash>
+% git submodule add git@github.com:samcarter/beamerthemeSam.git
+% git commit -am 'Add theme as submodule'
+% cd beamerthemeSam
+% git checkout <commit hash>
 \makeatletter
 \providecommand*{\input@path}{}
 \g@addto@macro\input@path{{./include/}{./beamerthemeSam/}}
 \makeatother
 
 \usetheme[
-  themecolor=blue!50!black,
-  listingcolor=samteal!95!black,
+  %themecolor=samblue,
+  %listingcolor=samteal!95!black,
   handout%  will produce a 6/8 on 1 handout if compiled with \newif\ifnotes \notestrue
 ]{sam}
 
@@ -54,6 +54,15 @@
 \author{Author}
 \institute{Institute}
 
+% for colour sample
+\newcommand{\testcolor}[1]{%
+  \begingroup
+    \color{#1}%
+    \makebox[0cm][l]{\rule[-0.9cm]{2.3cm}{2cm}}%
+  \endgroup
+  \makebox[2.3cm][c]{#1}%
+}
+
 \begin{document}
 
 \begin{frame}
@@ -63,14 +72,10 @@
 \section{Section Title}
 
 \begin{frame}
-  \frametitle{Frametitle}
-  \begin{block}{title}
-  content...
-  \end{block}
-  
-  \begin{itemize}
-  \item test
-  \end{itemize}
+  \frametitle{Predefined Colours}
+  \foreach \col in {samyellow,samorange,samred,sammagenta,samviolet,samlila,samdblue,samlblue,samteal,samlgreen,samdgreen,samlgray,samdgray}{
+    \testcolor{\col}%
+  }  
 \end{frame}
 
 \begin{frame}[standout]
