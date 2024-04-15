@@ -1,25 +1,13 @@
-% Copyright 2023-2024 by samcarter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Personal beamer theme
+% Copyright samcarter
 %
 % This file may be distributed and/or modified
 % under the LaTeX Project Public License 1.3c or later
-
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \mode<presentation>
-
-\definecolor{samyellow}{RGB}{246,193,65}
-\definecolor{samorange}{RGB}{241,147,45}
-\definecolor{samred}{RGB}{191,26,46}% TikZbricks
-\definecolor{sammagenta}{RGB}{170,42,104}% TikZmarmots
-\definecolor{samviolet}{RGB}{136,46,114}% TikZlings
-\definecolor{samlila}{RGB}{101,67,159}% Rainbow beamer theme
-\definecolor{samdblue}{RGB}{0,51,134}% TikZducks
-\definecolor{samlblue}{RGB}{22,89,155}
-\definecolor{samteal}{RGB}{25,143,157}% Tcolorbox beamer theme
-\definecolor{samlgreen}{RGB}{68,170,153}% Jigsaw
-\definecolor{samdgreen}{RGB}{78,178,125}
-\definecolor{samlgray}{RGB}{160,160,185}
-\definecolor{samdgray}{RGB}{60,60,85}
-\colorlet{themecolor}{samdblue}
-\colorlet{samlisting}{samteal!95!black}
 
 \apptocmd{\titlegraphic}{\def\insertsectiongraphic{#1}}{}{}
 \newcommand\sectiongraphic[1]{\def\insertsectiongraphic{#1}}
@@ -30,22 +18,22 @@
 \newif\ifhandout
 \handoutfalse
 
-\DeclareOptionBeamer{themecolor}{\colorlet{themecolor}{#1}}
-\DeclareOptionBeamer{listingcolor}{\colorlet{samlisting}{#1}}
+\DeclareOptionBeamer{themecolor}{\PassOptionsToPackage{themecolor=#1}{themesam}}
+\DeclareOptionBeamer{listingcolor}{\PassOptionsToPackage{listingcolor=#1}{themesam}}
 \DeclareOptionBeamer{titlegraphic}{\titlegraphic{#1}}
 \DeclareOptionBeamer{titlecredit}{\titlecredit{#1}}
 \DeclareOptionBeamer{sectiongraphic}{\sectiongraphic{#1}}
 \DeclareOptionBeamer{handout}{\handouttrue}
 \ProcessOptionsBeamer
 
+\RequirePackage{themesam}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % packages
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[T1]{fontenc}% for the | in the footline
 \usepackage{lmodern}
-\usepackage{listings}
 \usepackage{tikz}% for title and section pages
 \graphicspath{{include}}
 
@@ -291,31 +279,8 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% use backticks for inline code
-\AtBeginDocument{\lstMakeShortInline`}
-
 % a new frame environemnt which allows to show frames in listings
 \newenvironment{verbframe}[1][]{\begin{frame}[environment=verbframe,#1]}{\end{frame}}
-
-\lstdefinestyle{sam}{%
-  language={[latex]TeX},
-  tabsize=2,
-  breaklines,
-  basicstyle=\ttfamily,
-  columns=fullflexible,
-  texcsstyle=*\color{samlisting}\bfseries,
-  commentstyle=\color{gray}\itshape,
-  tabsize=2,
-  moretexcs={
-    usetheme,frametitle,setsansfont,setmathfont,usecolortheme,molochset,metroset,addtobeamertemplate,setbeamertemplate,tableofcontents,insertaspectratio,beamersidebarwidth,beamerheadheight
-  },
-  literate=
-    {\{}{{\textcolor{samlisting}{\bfseries\{}}}{1}
-    {\}}{{\textcolor{samlisting}{\bfseries\}}}}{1}
-    {[}{{\textcolor{samlisting}{\bfseries[}}}{1}
-    {]}{{\textcolor{samlisting}{\bfseries]}}}{1}%  
-}
-\lstset{style=sam}
 
 \mode
 <all>

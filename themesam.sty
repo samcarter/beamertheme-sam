@@ -1,4 +1,18 @@
-\ProvidesPackage{themesam}[a helper theme for docs by samcarter]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Personal helper theme for package documentations
+% Copyright samcarter
+%
+% This file may be distributed and/or modified
+% under the LaTeX Project Public License 1.3c or later
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Usage:
+% ln ~/Life/latex/beamertheme-sam/themesam.sty package-doc-settings.sty 
+% \usepackage[
+%   themecolor=samdblue
+% ]{\jobname-settings}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -27,7 +41,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{xkeyval}
 \DeclareOptionX{themecolor}[samdblue]{\colorlet{themecolor}{#1}}
-\ExecuteOptionsX{themecolor}
+\DeclareOptionX{listingcolor}[samdblue]{\colorlet{listingcolor}{#1}}
+\ExecuteOptionsX{themecolor,listingcolor}
 \ProcessOptionsX
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -35,15 +50,18 @@
 % Packages
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\@ifclassloaded{beamer}{}{%
+  \RequirePackage[english]{babel}
+  \RequirePackage[paper=a4paper,margin=2.9cm]{geometry}
+  \RequirePackage{scrlayer-scrpage}
+  \let\hrulefillx\hrulefill
+  \RequirePackage[bitstream-charter]{mathdesign}
+  \let\hrulefill\hrulefillx
+  \RequirePackage[scaled=0.95]{beramono}% bold mono font
+  \RequirePackage[hang,flushmargin,bottom]{footmisc}
+  \RequirePackage[colorlinks=true,breaklinks=true,allcolors=themecolor]{hyperref}
+}
 \RequirePackage[T1]{fontenc}
-\RequirePackage[english]{babel}
-\RequirePackage[paper=a4paper,margin=2.9cm]{geometry}
-\RequirePackage{scrlayer-scrpage}
-\let\hrulefillx\hrulefill
-\RequirePackage[bitstream-charter]{mathdesign}
-\let\hrulefill\hrulefillx
-\RequirePackage[hang,flushmargin,bottom]{footmisc}
-\RequirePackage[colorlinks=true,breaklinks=true,allcolors=themecolor]{hyperref}
 \RequirePackage{xspace}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -51,10 +69,58 @@
 % Listings
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[cachedir=/tmp/mint]{minted}
-\usemintedstyle{vs}
+\RequirePackage[
+  cachedir=./build/
+]{minted}
+
+\begin{filecontents*}[noheader]{./build/sam.pygstyle}
+\makeatletter
+\def\PYG@reset{\let\PYG@it=\relax \let\PYG@bf=\relax%
+    \let\PYG@ul=\relax \let\PYG@tc=\relax%
+    \let\PYG@bc=\relax \let\PYG@ff=\relax}
+\def\PYG@tok#1{\csname PYG@tok@#1\endcsname}
+\def\PYG@toks#1+{\ifx\relax#1\empty\else%
+    \PYG@tok{#1}\expandafter\PYG@toks\fi}
+\def\PYG@do#1{\PYG@bc{\PYG@tc{\PYG@ul{%
+    \PYG@it{\PYG@bf{\PYG@ff{#1}}}}}}}
+\def\PYG#1#2{\PYG@reset\PYG@toks#1+\relax+\PYG@do{#2}}
+
+% optional arguments
+\expandafter\def\csname PYG@tok@na\endcsname{\def\PYG@tc##1{\textcolor{black}{##1}}}
+
+% macros
+\expandafter\def\csname PYG@tok@k\endcsname{\def\PYG@tc##1{\textcolor{listingcolor}{\bfseries ##1}}}
+% curly brakets
+\expandafter\def\csname PYG@tok@nb\endcsname{\def\PYG@tc##1{\textcolor{listingcolor}{\bfseries ##1}}}
+
+% comments
+\expandafter\def\csname PYG@tok@c\endcsname{\def\PYG@tc##1{\textcolor{gray}{\itshape ##1}}}
+
+\def\PYGZbs{\char`\\}
+\def\PYGZus{\char`\_}
+\def\PYGZob{\char`\{}
+\def\PYGZcb{\char`\}}
+\def\PYGZca{\char`\^}
+\def\PYGZam{\char`\&}
+\def\PYGZlt{\char`\<}
+\def\PYGZgt{\char`\>}
+\def\PYGZsh{\char`\#}
+\def\PYGZpc{\char`\%}
+\def\PYGZdl{\char`\$}
+\def\PYGZhy{\char`\-}
+\def\PYGZsq{\char`\'}
+\def\PYGZdq{\char`\"}
+\def\PYGZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYGZat{@}
+\def\PYGZlb{[}
+\def\PYGZrb{]}
+\makeatother
+\end{filecontents*}
+
+\usemintedstyle{sam}
 \setminted{
-  breakaftersymbolpre={},
+  breaksymbolleft={},
   tabsize=2,
   breaklines=true
 }
@@ -85,22 +151,24 @@
 % document settings
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\addtokomafont{sectioning}{\color{themecolor}}
-\addtokomafont{date}{\normalsize}
-\addtokomafont{author}{\normalsize}
-\setlength{\footnotemargin}{0.7em}
+\@ifclassloaded{scrartcl}{%
+  \addtokomafont{sectioning}{\color{themecolor}}
+  \addtokomafont{date}{\normalsize}
+  \addtokomafont{author}{\normalsize}
+  \setlength{\footnotemargin}{0.7em}
+}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Custom macros
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\CTAN}{\textsc{CTAN}\xspace}
-\newcommand{\TikZ}{Ti\emph{k}Z\xspace}
-\newcommand{\miktex}{MiK\TeX\xspace}
-\newcommand{\texlive}{\TeX{}Live\xspace}
-\newcommand{\tikzbrick}{Ti\emph{k}Zbrick\xspace}
-\newcommand{\tikzducks}{Ti\emph{k}Zducks\xspace}
-\newcommand{\tikzlings}{Ti\emph{k}Zlings\xspace}
-\newcommand{\tikzmarmots}{Ti\emph{k}Zmarmots\xspace}
-\newcommand{\ConTeXt}{C\kern-.0333emon\-\kern-.0667em\TeX\kern-.0333emt}
+\providecommand*{\CTAN}{\textsc{CTAN}\xspace}
+\providecommand*{\TikZ}{Ti\emph{k}Z\xspace}
+\providecommand*{\miktex}{MiK\TeX\xspace}
+\providecommand*{\texlive}{\TeX{}Live\xspace}
+\providecommand*{\tikzbrick}{Ti\emph{k}Zbrick\xspace}
+\providecommand*{\tikzducks}{Ti\emph{k}Zducks\xspace}
+\providecommand*{\tikzlings}{Ti\emph{k}Zlings\xspace}
+\providecommand*{\tikzmarmots}{Ti\emph{k}Zmarmots\xspace}
+\providecommand*{\ConTeXt}{C\kern-.0333emon\-\kern-.0667em\TeX\kern-.0333emt}
