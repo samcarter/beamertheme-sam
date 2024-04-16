@@ -1,10 +1,11 @@
 % !TeX program = txs:///arara | txs:///view-log | txs:///view-pdf "?am).pdf"
-% !TEX spellcheck = de
+% !TEX spellcheck = en
 % arara: latexmk: {
 % arara: --> engine: pdflatex,
 % arara: --> options: [
 % arara: -->    '-jobname=@{getBasename(getOriginalReference())}',
 % arara: -->    '-synctex=1',
+% arara: -->    '-shell-escape',
 % arara: -->    '-interaction=nonstopmode',
 % arara: -->    '-pretex="\\newif\\ifnotes \\notesfalse"',
 % arara: -->    '-usepretex'
@@ -15,6 +16,7 @@
 % arara: --> options: [
 % arara: -->    '-jobname=@{getBasename(getOriginalReference())}_notes',
 % arara: -->    '-synctex=1',
+% arara: -->    '-shell-escape',
 % arara: -->    '-interaction=nonstopmode',
 % arara: -->    '-pretex="\\newif\\ifnotes \\notestrue"',
 % arara: -->    '-usepretex'
