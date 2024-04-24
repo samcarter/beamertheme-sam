@@ -116,20 +116,20 @@ function tag_hook(tagname)
   git("add", "README_ctan.md")  
   git("add", "CHANGELOG.md")
 	os.execute("arara " .. module .. "-doc")
-	os.execute("cp " .. module .. "-doc.pdf documentation.pdf")
-	git("add", "documentation.pdf")
+	os.execute("cp " .. module .. "-doc.pdf DOCUMENTATION.pdf")
+	git("add", "DOCUMENTATION.pdf")
 	git("commit -m 'step version ", packageversion, "'" )
 	git("tag", packageversion)
 end
 
 -- collecting files for ctan ===================================================
 docfiles = {"*-doc.tex"}
-textfiles= {"README.md"}
-ctanreadme= "README.md"
-packtdszip   = false
+textfiles = {"README.md", "DEPENDS.txt"}
+ctanreadme = "README.md"
+packtdszip = false
 installfiles = {"*.sty", "*.code.tex", "*.mkiv", "*-generic.tex","*-plain.tex"}
 sourcefiles = {"*.sty", "*.code.tex", "*.mkiv", "*-generic.tex","*-plain.tex"}  
-excludefiles = {"documentation.pdf","test.pdf"}
+excludefiles = {"DOCUMENTATION.pdf","test.pdf"}
 
 -- configuring ctan upload =====================================================
 if not ok then
