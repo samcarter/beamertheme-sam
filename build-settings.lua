@@ -52,7 +52,7 @@ function git(...)
 end
 
 -- replace version tags in .sty and -doc.tex files =============================
-tagfiles = {"*.sty", "*-doc.tex", "README.md", "README_ctan.md", "CHANGELOG.md", "*.mkiv"}
+tagfiles = {"*.sty", "*-doc.tex", "CHANGELOG.md", "*.mkiv"}
 function update_tag (file,content,tagname,tagdate)
 	tagdate = string.gsub (packagedate,"-", "/")
 	if string.match (file, "%.sty$" ) then
@@ -69,20 +69,6 @@ function update_tag (file,content,tagname,tagdate)
 			"\\date{Version " .. packageversion .. " \\textendash{} " .. tagdate
 		)
 		return content
-	elseif string.match (file, "README.md$" ) then
-		content = string.gsub (
-			content,
-			"Current version: %d%d%d%d%/%d%d%/%d%d version v%d%.%d+",
-			"Current version: " .. tagdate.." version "..packageversion
-		)
-		return content
-	elseif string.match (file, "README_ctan.md$" ) then
-		content = string.gsub (
-			content,
-			"Current version: %d%d%d%d%/%d%d%/%d%d version v%d%.%d+",
-			"Current version: " .. tagdate.." version "..packageversion
-		)
-		return content  
   elseif string.match (file, "%.mkiv$" ) then
     content = string.gsub (
       content,
