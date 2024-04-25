@@ -156,4 +156,4 @@ uploadconfig = {
 }
 
 -- cleanup =====================================================================
-cleanfiles = {module .. "-ctan.curlopt", module .. "-ctan.zip"}
+cleanfiles = {module .. "-ctan.curlopt", module .. "-ctan.zip", module .. "-doc.aux", module .. "-doc.fdb_latexmk", module .. "-doc.fls", module .. "-doc.listing", module .. "-doc.log", module .. "-doc.out", module .. "-doc.synctex.gz", module .. "-doc.cif", module .. "-doc.toc", "announcement.txt"}
