@@ -11,4 +11,3 @@ My personal theme for beamer presentations and package documentations. It is not
 ![beamerthemeSam-doc-3](https://user-images.githubusercontent.com/43832342/232459363-55b31bf8-9e55-42bc-9ad4-71017b46eed4.png)
 
 Licensed under the LaTeX Project Public License 1.3c or later.
-
