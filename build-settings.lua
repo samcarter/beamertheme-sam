@@ -120,6 +120,8 @@ function tag_hook(tagname)
 	git("add", "DOCUMENTATION.pdf")
 	git("commit -m 'step version ", packageversion, "'" )
 	git("tag", packageversion)
+	git("push")
+	os.execute("gh release create " .. packageversion .. " -F announcement.txt")
 end
 
 -- collecting files for ctan ===================================================
