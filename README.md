@@ -1,6 +1,6 @@
 # beamertheme-sam
 
-[![GitHub](https://img.shields.io/github/license/samcarter/beamertheme-sam.svg?color=blue)](http://www.latex-project.org/lppl.txt)
+[![License](https://img.shields.io/github/license/samcarter/beamertheme-sam.svg?color=blue)](https://www.latex-project.org/lppl.txt)
 
 My personal theme for beamer presentations and package documentations. It is not really intended for other people to use (contains additional code, like packages/settings I often use), but feel free to re-use bits and pieces which you deem useful.
 
