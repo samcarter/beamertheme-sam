@@ -35,6 +35,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{lmodern}
 \usepackage{tikz}% for title and section pages
+\usepackage{iexec}% for creating icon.png
 \graphicspath{{include}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -281,6 +282,17 @@
 
 % a new frame environemnt which allows to show frames in listings
 \newenvironment{verbframe}[1][]{\begin{frame}[environment=verbframe,#1]}{\end{frame}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% create icon.png from theme colour
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% see https://topanswers.xyz/tex?q=8040#a7653
+\extractcolorspecs{themecolor}{\tmpmodel}{\tmpcolorspec}
+\convertcolorspec{\tmpmodel}{\tmpcolorspec}{RGB}{\RGBcolorspec}
+\iexec{magick -size 100x100 xc:rgb\\(\RGBcolorspec\\) icon.png}
 
 \mode
 <all>
