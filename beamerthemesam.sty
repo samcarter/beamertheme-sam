@@ -292,7 +292,7 @@
 % see https://topanswers.xyz/tex?q=8040#a7653
 \extractcolorspecs{themecolor}{\tmpmodel}{\tmpcolorspec}
 \convertcolorspec{\tmpmodel}{\tmpcolorspec}{RGB}{\RGBcolorspec}
-\iexec{magick -size 100x100 xc:rgb\\(\RGBcolorspec\\) icon.png}
+\iexec[maybe]{magick -size 100x100 xc:rgb\\(\RGBcolorspec\\) icon.png}
 
 \mode
 <all>
