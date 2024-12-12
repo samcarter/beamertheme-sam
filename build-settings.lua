@@ -39,7 +39,7 @@ else
 end
 
 -- Package date ================================================================
-packagedate = os.date("!%Y-%m-%d")
+packagedate = os.date("%Y-%m-%d")
 --packagedate = "2020-01-02"
 
 -- interacting with git ========================================================
