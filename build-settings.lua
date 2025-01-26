@@ -52,7 +52,7 @@ function git(...)
 end
 
 -- replace version tags in .sty and -doc.tex files =============================
-tagfiles = {"*.sty", "*-doc.tex", "CHANGELOG.md", "*.mkiv"}
+tagfiles = {"*.sty", "*-doc.tex", "CHANGELOG.md"}
 function update_tag (file,content,tagname,tagdate)
 	tagdate = string.gsub (packagedate,"-", "/")
 	if string.match (file, "%.sty$" ) then
@@ -69,13 +69,6 @@ function update_tag (file,content,tagname,tagdate)
 			"\\date{Version " .. packageversion .. " \\textendash{} " .. tagdate
 		)
 		return content
-  elseif string.match (file, "%.mkiv$" ) then
-    content = string.gsub (
-      content,
-            "\\writestatus{(.-)}%{ConTeXt User Module / TikZDucks %d%d%d%d%/%d%d%/%d%d version v%d%.%d+",
-            "\\writestatus{%1}{ConTeXt User Module / TikZDucks " .. tagdate.." version "..packageversion
-    )
-    return content        
   elseif string.match (file, "CHANGELOG.md$" ) then
     local url = "https://github.com/samcarter/" .. module .. "/compare/"
     local previous = string.match(content,"compare/(v%d%.%d)%.%.%.HEAD")
@@ -109,13 +102,12 @@ end
 
 -- committing retagged file and tag the commit =================================
 function tag_hook(tagname)
-	git("add", "*.sty")
-	git("add", "*-doc.tex")
-  git("add", "*.mkiv")    
-	git("add", "README.md")
+  git("add", "*.sty")
+  git("add", "*-doc.tex")
+  git("add", "README.md")
   git("add", "README_ctan.md")  
   git("add", "CHANGELOG.md")
-	os.execute("arara " .. module .. "-doc")
+  os.execute("arara " .. module .. "-doc")
 	os.execute("cp " .. module .. "-doc.pdf DOCUMENTATION.pdf")
 	git("add", "DOCUMENTATION.pdf")
 	git("commit -m 'step version ", packageversion, "'" )
@@ -130,8 +122,8 @@ docfiles = {"*-doc.tex"}
 textfiles = {"README.md", "DEPENDS.txt"}
 ctanreadme = "README.md"
 packtdszip = false
-installfiles = {"*.sty", "*.code.tex", "*.mkiv", "*-generic.tex","*-plain.tex"}
-sourcefiles = {"*.sty", "*.code.tex", "*.mkiv", "*-generic.tex","*-plain.tex"}  
+installfiles = {"*.sty", "*.code.tex"}
+sourcefiles = {"*.sty", "*.code.tex"}  
 excludefiles = {"DOCUMENTATION.pdf","test.pdf"}
 
 -- configuring ctan upload =====================================================
