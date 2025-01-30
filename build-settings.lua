@@ -38,6 +38,11 @@ else
   packageversion="v1.42"
 end
 
+-- manually setting the new version
+-- newmajortag = "v2."
+-- newsubtag = 0
+-- packageversion = newmajortag .. math.floor(newsubtag)
+
 -- Package date ================================================================
 packagedate = os.date("%Y-%m-%d")
 --packagedate = "2020-01-02"
