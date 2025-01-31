@@ -38,10 +38,12 @@ else
   packageversion="v1.42"
 end
 
--- manually setting the new version
+-- manually setting the new version ============================================
+-- comment out line 89 as well =================================================
 -- newmajortag = "v2."
 -- newsubtag = 0
 -- packageversion = newmajortag .. math.floor(newsubtag)
+-- print("New tag: " .. packageversion)
 
 -- Package date ================================================================
 packagedate = os.date("%Y-%m-%d")
