@@ -1,0 +1,171 @@
+\ProvidesPackage{xbeamerthemesam}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% option handling
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% replace with themesam once the minted error is fixed
+\RequirePackage{xcolor}
+\definecolor{samyellow}{RGB}{246,193,65}
+\definecolor{samorange}{RGB}{241,147,45}% pgfplotsthemebeamer
+\definecolor{samred}{RGB}{191,26,46}% TikZbricks
+\definecolor{sammagenta}{RGB}{170,42,104}% TikZmarmots
+\definecolor{samviolet}{RGB}{136,46,114}% TikZlings
+\definecolor{samlila}{RGB}{101,67,159}% Rainbow beamer theme
+\definecolor{samdblue}{RGB}{0,51,134}% beamer theme
+\definecolor{samlblue}{RGB}{22,89,155}% TikZducks
+\definecolor{samteal}{RGB}{25,143,157}% Tcolorbox beamer theme
+\definecolor{samlgreen}{RGB}{68,170,153}% Jigsaw
+\definecolor{samdgreen}{RGB}{78,178,125}
+\definecolor{samlgray}{RGB}{160,160,185}
+\definecolor{samdgray}{RGB}{60,60,85}
+
+\newcommand{\titlegraphic}[1]{\def\@titlegraphic{#1}\def\@sectiongraphic{#1}}
+\titlegraphic{}
+\newcommand{\sectiongraphic}[1]{\def\@sectiongraphic{#1}}
+\sectiongraphic{}
+\newcommand\titlecredit[1]{\def\@titlecredit{#1}}
+\titlecredit{}
+
+\RequirePackage{xkeyval}
+\DeclareOptionX{themecolor}[samdblue]{%
+  \colorlet{themecolor}{#1}
+%  \PassOptionsToPackage{themecolor=#1}{themesam}
+}
+\DeclareOptionX{listingcolor}[samlblue]{%
+  \colorlet{listingcolor}{#1}
+%  \PassOptionsToPackage{listingcolor=#1}{themesam}
+}
+\DeclareOptionX{titlegraphic}{\titlegraphic{#1}}
+\DeclareOptionX{titlecredit}{\titlecredit{#1}}
+\DeclareOptionX{sectiongraphic}{\sectiongraphic{#1}}
+
+\ExecuteOptionsX{themecolor,listingcolor,titlegraphic,titlecredit,sectiongraphic}
+\ProcessOptionsX
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% misc
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz}
+\usepackage{lmodern}
+\def\familydefault{\sfdefault}
+\graphicspath{{include}}
+\newcommand{\structure}[1]{{\bfseries\color{themecolor}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% header area with frame title
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% adjust space above/below frametitle -> this sets position within the coloured background
+\geometry{
+  tmargin=1.8cm,
+  headsep=0.8cm,
+}
+
+% header settings
+\EditInstance{header}{std}{background-color = themecolor}
+\EditInstance{header}{std}{color = white}
+\EditInstance{header}{std}{height = 1.8cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% footer
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\EditInstance{footer}{std}{color=gray}
+\EditInstance{footer}{std}{separator={\hfil|\hfil}}
+\EditInstance{footer}{std}{element-order={date,author,title,institute,framenumber}}
+%\EditInstance{footer}{std}{right-skip=1cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ExplSyntaxOn
+\DeclareTemplateInterface { titlepage } { xbeamer } { 0 }
+  {
+    framestyle : tokenlist = xbeamer ,
+    
+  }
+\DeclareTemplateCode { titlepage } { xbeamer } { 0 }
+  {
+    framestyle = \l__xbeamer_titlepage_framestyle_tl ,
+  }
+  {
+    \tl_if_empty:NF \l__xbeamer_titlepage_framestyle_tl
+      { \exp_args:NV \thispagestyle \l__xbeamer_titlepage_framestyle_tl }
+    \begin{tikzpicture}[remember~picture,overlay]
+      \fill[themecolor] ([yshift=2.5cm]current~page.south~west) rectangle (current~page.north~east);
+      \ifx\@titlegraphic\empty\else
+        \node[anchor=south] at ([yshift=2.65cm]current~page.south) {\includegraphics[width=\paperwidth]{\@titlegraphic}};
+      \fi
+      \ifx\@title\empty\else
+        \ifx\@titlegraphic\empty\else
+          \node[opacity=0.5,anchor=north~west,text~width=\textwidth,align=flush~left] at ([yshift=-\Gm@lmargin-0.15em,xshift=\Gm@lmargin+0.1em]current~page.north~west) {%
+            \UseInstance { titlepage-element } {title} { \color{black}\@title }\par
+            \ifx\@subtitle\empty\else
+              \medskip
+              \UseInstance { titlepage-element } {subtitle} { \color{black}\@subtitle }\par
+            \fi
+          }; 
+        \fi
+        \node[anchor=north~west,text~width=\textwidth,align=flush~left] at ([yshift=-\Gm@lmargin,xshift=\Gm@lmargin]current~page.north~west) {%
+          \UseInstance { titlepage-element } {title} { \@title }\par
+          \ifx\@subtitle\empty\else
+            \medskip
+            \UseInstance { titlepage-element } {subtitle} { \@subtitle }\par
+          \fi
+        };
+      \fi
+      \node[anchor=south~west,text~width=\textwidth,minimum~height=2cm] at ([xshift=\Gm@lmargin,yshift=0.25cm]current~page.south~west) {
+        \ifx\@author\@empty \else
+          \UseInstance { titlepage-element } {author} { \@author }\par\smallskip
+        \fi
+        \ifx\@institute\@empty \else
+          \UseInstance { titlepage-element } {institute} { \@institute }\par\smallskip
+        \fi
+        \ifx\@date\@empty \else
+          \UseInstance { titlepage-element } {date} { \@date }\par
+        \fi
+      };
+      \node[anchor=south~east,font=\tiny,align=right,inner~sep=0.15cm] at (current~page.south~east) {\@titlecredit\par};
+    \end{tikzpicture}
+  }
+\ExplSyntaxOff
+
+\EditInstance{titlepage-element}{title}{
+  font=\Huge\bfseries,
+  color=white,
+  before-skip = 0em,
+  after-skip = 0em
+}
+\EditInstance{titlepage-element}{subtitle}{
+  font=\LARGE\bfseries,
+  color=white,
+  before-skip = 0em,
+  after-skip = 0em
+}
+\EditInstance{titlepage-element}{author}{
+  font=\normalsize,
+  color=black,
+  before-skip = 0em,
+  after-skip = 0em
+}
+\EditInstance{titlepage-element}{institute}{
+  font=\normalsize,
+  color=black,
+  before-skip = 0em,
+  after-skip = 0em
+}
+\EditInstance{titlepage-element}{date}{
+  font=\normalsize,
+  color=black,
+  before-skip = 0em,
+  after-skip = 0em
+}
+
