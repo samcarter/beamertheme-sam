@@ -87,18 +87,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ExplSyntaxOn
-\DeclareTemplateInterface { titlepage } { xbeamer } { 0 }
+\DeclareTemplateInterface { titlepage } { xbeamer } { 0 } { }
+\DeclareTemplateCode { titlepage } { xbeamer } { 0 } { }
   {
-    framestyle : tokenlist = xbeamer ,
-    
-  }
-\DeclareTemplateCode { titlepage } { xbeamer } { 0 }
-  {
-    framestyle = \l__xbeamer_titlepage_framestyle_tl ,
-  }
-  {
-    \tl_if_empty:NF \l__xbeamer_titlepage_framestyle_tl
-      { \exp_args:NV \thispagestyle \l__xbeamer_titlepage_framestyle_tl }
+    \thispagestyle{plain}
     \begin{tikzpicture}[remember~picture,overlay]
       \fill[themecolor] ([yshift=2.5cm]current~page.south~west) rectangle (current~page.north~east);
       \ifx\@titlegraphic\empty\else
@@ -168,4 +160,28 @@
   before-skip = 0em,
   after-skip = 0em
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Section page
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ExplSyntaxOn
+\NewTemplateType { sectionpage } { 0 }
+\DeclareTemplateInterface { sectionpage } { xbeamer } { 0 } { }
+\DeclareTemplateCode { sectionpage } { xbeamer } { 0 } { }
+  {
+    \begin{tikzpicture}[remember~picture,overlay]
+      \fill[themecolor] ([yshift=-2.5cm]current~page.north~west) rectangle (current~page.north~east);
+      \ifx\@sectiongraphic\empty\else
+        \node[anchor=south] at ([yshift=-2.35cm]current~page.north) {\includegraphics[width=\paperwidth]{\@sectiongraphic}};
+      \fi 
+      \node[anchor=north~west,text~width=\textwidth] at ([xshift=\Gm@lmargin,yshift=-3.75cm]current~page.north~west) {
+        \color{samdgray}\LARGE\bfseries\l__xbeamer_section_tl\par
+      };      
+    \end{tikzpicture}
+  }
+\ExplSyntaxOff
+
+
 
