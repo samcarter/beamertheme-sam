@@ -69,9 +69,11 @@
 }
 
 % header settings
-\EditInstance{header}{std}{background-color = themecolor}
-\EditInstance{header}{std}{color = white}
-\EditInstance{header}{std}{height = 1.8cm}
+\EditInstance{header}{std}{
+  background-color = themecolor,
+  color = white,
+  height = 1.8cm
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -79,10 +81,13 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\EditInstance{footer}{std}{color=gray}
-\EditInstance{footer}{std}{separator={\hfil|\hfil}}
-\EditInstance{footer}{std}{element-order={date,author,title,institute,framenumber}}
-%\EditInstance{footer}{std}{right-skip=1cm}
+\EditInstance{footer}{std}{
+  color=gray,
+  separator={\hfill|\hfill},
+  element-order={date,author,title,institute,framenumber},
+  right-skip=3mm,
+  left-skip=3mm,
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -182,6 +187,3 @@
     \end{tikzpicture}
   }
 \ExplSyntaxOff
-
-
-
