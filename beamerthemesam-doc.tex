@@ -54,15 +54,6 @@
 \author{Author}
 \institute{Institute}
 
-% for colour sample
-\newcommand{\testcolor}[1]{%
-  \begingroup
-    \color{#1}%
-    \makebox[0cm][l]{\rule[-0.9cm]{2.3cm}{2cm}}%
-  \endgroup
-  \makebox[2.3cm][c]{#1}%
-}
-
 \begin{document}
 
 \begin{frame}
@@ -73,9 +64,23 @@
 
 \begin{frame}
   \frametitle{Predefined Colours}
-  \foreach \col in {samyellow,samorange,samred,sammagenta,samviolet,samlila,samdblue,samlblue,samteal,samlgreen,samdgreen,samlgray,samdgray}{
-    \testcolor{\col}%
-  }
+  \samcolours
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Source code}
+\begin{samcode*}{}
+\documentclass{standalone}
+\usepackage{tikzducks,tikzlings}
+
+\begin{document}
+
+\begin{tikzpicture}
+  \duck[]
+\end{tikzpicture}
+
+\end{document}
+\end{samcode*}
 \end{frame}
 
 \begin{frame}[standout]
