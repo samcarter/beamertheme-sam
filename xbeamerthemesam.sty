@@ -6,22 +6,6 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% replace with themesam once the minted error is fixed
-\RequirePackage{xcolor}
-\definecolor{samyellow}{RGB}{246,193,65}
-\definecolor{samorange}{RGB}{241,147,45}% pgfplotsthemebeamer
-\definecolor{samred}{RGB}{191,26,46}% TikZbricks
-\definecolor{sammagenta}{RGB}{170,42,104}% TikZmarmots
-\definecolor{samviolet}{RGB}{136,46,114}% TikZlings
-\definecolor{samlila}{RGB}{101,67,159}% Rainbow beamer theme
-\definecolor{samdblue}{RGB}{0,51,134}% beamer theme
-\definecolor{samlblue}{RGB}{22,89,155}% TikZducks
-\definecolor{samteal}{RGB}{25,143,157}% Tcolorbox beamer theme
-\definecolor{samlgreen}{RGB}{68,170,153}% Jigsaw
-\definecolor{samdgreen}{RGB}{78,178,125}
-\definecolor{samlgray}{RGB}{160,160,185}
-\definecolor{samdgray}{RGB}{60,60,85}
-
 \newcommand{\titlegraphic}[1]{\def\@titlegraphic{#1}\def\@sectiongraphic{#1}}
 \titlegraphic{}
 \newcommand{\sectiongraphic}[1]{\def\@sectiongraphic{#1}}
@@ -31,12 +15,10 @@
 
 \RequirePackage{xkeyval}
 \DeclareOptionX{themecolor}[samdblue]{%
-  \colorlet{themecolor}{#1}
-%  \PassOptionsToPackage{themecolor=#1}{themesam}
+  \PassOptionsToPackage{themecolor=#1}{themesam}
 }
 \DeclareOptionX{listingcolor}[samlblue]{%
-  \colorlet{listingcolor}{#1}
-%  \PassOptionsToPackage{listingcolor=#1}{themesam}
+  \PassOptionsToPackage{listingcolor=#1}{themesam}
 }
 \DeclareOptionX{titlegraphic}{\titlegraphic{#1}}
 \DeclareOptionX{titlecredit}{\titlecredit{#1}}
@@ -44,6 +26,8 @@
 
 \ExecuteOptionsX{themecolor,listingcolor,titlegraphic,titlecredit,sectiongraphic}
 \ProcessOptionsX
+
+\RequirePackage{themesam}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %

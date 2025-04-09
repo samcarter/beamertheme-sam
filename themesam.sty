@@ -74,8 +74,7 @@
 % Packages
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\@ifclassloaded{beamer}{}{%
-\@ifclassloaded{xbeamer}{}{%
+\@ifclassloaded{scrartcl}{%
   \RequirePackage[english]{babel}
   \RequirePackage[paper=a4paper,margin=2.9cm]{geometry}
   \RequirePackage{scrlayer-scrpage}
@@ -88,7 +87,7 @@
   \RequirePackage[all]{nowidow}
   \RequirePackage[hyphens]{url}
   \RequirePackage[colorlinks=true,breaklinks=true,allcolors=themecolor,hyperfootnotes=false]{hyperref}
-}}
+}{}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{xspace}
 \RequirePackage{inconsolata}% mono font with bold, but italic is missing
