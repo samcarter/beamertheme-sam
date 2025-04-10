@@ -233,7 +233,7 @@
 \@ifundefined{ifnotes}{}{
 \ifnotes
 
-  % always show notes, even if emoty
+  % always show notes, even if empty
   \def\beamer@framenotesbegin{% at beginning of slide
     \gdef\beamer@noteitems{}%
     \gdef\beamer@notes{{}}% used to be totally empty.
@@ -280,7 +280,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% a new frame environemnt which allows to show frames in listings
+% a new frame environment which allows to show frames in listings
 \newenvironment{verbframe}[1][]{\begin{frame}[environment=verbframe,#1]}{\end{frame}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
