@@ -17,6 +17,13 @@
   %listingcolor=samteal!95!black
 ]{xbeamerthemesam}
 
+\AddToHook{section/begin}{
+  \begin{frame}
+    \UseTemplate{sectionpage}{xbeamer}{}
+  \end{frame}
+}
+
+
 \title{Title}
 \titlegraphic{blueshade}
 \titlecredit{
@@ -32,9 +39,6 @@
 \maketitle
 
 \section{Section Title}
-\begin{frame}
-\UseTemplate{sectionpage}{xbeamer}{}
-\end{frame}
 
 \begin{frame}
   \frametitle{Predefined Colours}
