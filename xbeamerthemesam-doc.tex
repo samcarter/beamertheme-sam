@@ -1,4 +1,4 @@
-\DocumentMetadata{testphase = latest}
+\DocumentMetadata{tagging=on}
 \PassOptionsToPackage{hidelinks}{hyperref}
 \documentclass{xbeamer}
 
@@ -18,11 +18,8 @@
 ]{xbeamerthemesam}
 
 \AddToHook{section/begin}{
-  \begin{frame}
-    \UseTemplate{sectionpage}{xbeamer}{}
-  \end{frame}
+  \UseTemplate{sectionpage}{xbeamer}{}
 }
-
 
 \title{Title}
 \titlegraphic{blueshade}
@@ -44,9 +41,9 @@
   \frametitle{Predefined Colours}
   \samcolours
 \end{frame}
-%
-%\begin{frame}[fragile]
-%\frametitle{Source code}
+
+\begin{frame}
+\frametitle{Source code}
 %\begin{samcode*}{}
 %\documentclass{standalone}
 %\usepackage{tikzducks,tikzlings}
@@ -59,10 +56,10 @@
 %
 %\end{document}
 %\end{samcode*}
-%\end{frame}
-%
-%\begin{frame}[standout]
-%  Happy beaming!
-%\end{frame}
+\end{frame}
+
+\begin{frame}%[standout]
+  Happy beaming!
+\end{frame}
 
 \end{document}
