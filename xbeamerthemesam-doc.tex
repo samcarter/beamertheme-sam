@@ -2,19 +2,8 @@
 \PassOptionsToPackage{hidelinks}{hyperref}
 \documentclass{xbeamer}
 
-% add subfolder to search path to find theme
-% git submodule add git@github.com:samcarter/beamertheme-sam.git
-% git commit -am 'Add theme as submodule'
-% cd beamertheme-sam
-% git checkout <commit hash>
-\makeatletter
-\providecommand*{\input@path}{}
-\g@addto@macro\input@path{{./include/}{./beamertheme-sam/}}
-\makeatother
-
 \usepackage[
-  %themecolor=samblue,
-  %listingcolor=samteal!95!black
+%  themecolor=red!70!black,
 ]{xbeamerthemesam}
 
 \AddToHook{section/begin}{
@@ -30,6 +19,7 @@
 \sectiongraphic{blueshade}
 \author{Author}
 \institute{Institute}
+\subtitle{Subtitle}
 
 \begin{document}
 
@@ -38,28 +28,8 @@
 \section{Section Title}
 
 \begin{frame}
-  \frametitle{Predefined Colours}
-  \samcolours
-\end{frame}
-
-\begin{frame}
-\frametitle{Source code}
-%\begin{samcode*}{}
-%\documentclass{standalone}
-%\usepackage{tikzducks,tikzlings}
-%
-%\begin{document}
-%
-%\begin{tikzpicture}
-%  \duck[]
-%\end{tikzpicture}
-%
-%\end{document}
-%\end{samcode*}
-\end{frame}
-
-\begin{frame}%[standout]
-  Happy beaming!
+  \frametitle{Example frame}
+  Content
 \end{frame}
 
 \end{document}
