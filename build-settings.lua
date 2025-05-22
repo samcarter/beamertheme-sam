@@ -131,7 +131,7 @@ ctanreadme = "README.md"
 packtdszip = false
 installfiles = {"*.sty", "*.code.tex"}
 sourcefiles = {"*.sty", "*.code.tex"}
-excludefiles = {"DOCUMENTATION.pdf","test.pdf","icon.pdf","cistercian-digits.pdf", "beamertheme-spectrum-bg.pdf"}
+excludefiles = {"DOCUMENTATION.pdf","test.pdf","icon.pdf"}
 
 -- configuring ctan upload =====================================================
 if not ok then
