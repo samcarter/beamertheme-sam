@@ -90,15 +90,14 @@
 }{}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{xspace}
-\@ifclassloaded{scrartcl}{%
-  \RequirePackage{inconsolata}% mono font with bold, but italic is missing  
-  \RequirePackage[scale=0.85]{cascadia-code}
-}{}
-\AddToHook{cmd/ttfamily/before}{\fontseries{sl}}
+\RequirePackage{inconsolata}% mono font with bold, but italic is missing  
+% \RequirePackage[scale=0.85]{cascadia-code}
+% \AddToHook{cmd/ttfamily/before}{\fontseries{sl}}
 \RequirePackage{synthslant}% to fake slanted comments in inconsolata
 \RequirePackage{metalogox}% should be loaded after the fonts
 \@ifclassloaded{scrartcl}{}{%
   \RequirePackage{lmodern}
+  \renewcommand{\ttdefault}{lmtt}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
