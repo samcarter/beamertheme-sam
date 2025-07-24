@@ -1,0 +1,54 @@
+% !TeX TS-program = pdflatex-dev -interaction=nonstopmode % | txs:///view-pdf | txs:///view-log
+\DocumentMetadata{lang=en}
+\PassOptionsToPackage{hidelinks}{hyperref}
+\documentclass{ltx-talk}
+
+\usepackage{talkthemespectrum}
+\usepackage{themesam}
+
+\AddToHook{section/begin}{
+  \UseTemplate{sectionpage}{talk}{}
+}
+
+\title{Title}
+\titlegraphic{blueshade}
+\titlecredit{
+  \scriptsize
+  Title graphic: Tcolorbox package
+}
+\sectiongraphic{blueshade}
+\author{Author}
+\institute{Institute}
+\subtitle{Subtitle}
+
+\begin{document}
+
+\maketitle
+
+\section{Section Title}
+
+\begin{frame}
+  \frametitle{Predefined Colours}
+  \samcolours
+\end{frame}
+
+\begin{frame*}
+\frametitle{Source code}
+\begin{samcode*}{}
+\documentclass{standalone}
+\usepackage{tikzducks,tikzlings}
+
+\begin{document}
+
+\begin{tikzpicture}
+  \duck[]
+\end{tikzpicture}
+
+\end{document}
+\end{samcode*}
+\end{frame*}
+
+\begin{frame}
+  Happy beaming!
+\end{frame}
+\end{document}
