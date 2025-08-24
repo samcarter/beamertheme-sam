@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/github/license/samcarter/beamertheme-sam.svg?color=blue)](https://www.latex-project.org/lppl.txt)
 
-My personal theme for beamer presentations and package documentations. An (x)beamer theme based on this is available as the spectrum theme 
+My personal theme for beamer/ltx-talk presentations and package documentations. An (x)beamer theme based on this is available as the spectrum theme 
   (
     [github](https://github.com/samcarter/beamertheme-spectrum), 
     [CTAN](https://ctan.org/pkg/beamertheme-spectrum) 
