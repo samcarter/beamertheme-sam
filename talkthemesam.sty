@@ -1,0 +1,33 @@
+\ProvidesPackage{talkthemesam}
+
+\ExplSyntaxOn
+\keys_define:nn { talk@sam } {
+  themecolor.code=\PassOptionsToPackage{themecolor=#1}{talkthemespectrum}\PassOptionsToPackage{themecolor=#1}{themesam},
+  titlegraphic.code=\PassOptionsToPackage{titlegraphic=#1}{talkthemespectrum},
+  titlecredit.code=\PassOptionsToPackage{titlecredit=#1}{talkthemespectrum},
+  sectiongraphic.code=\PassOptionsToPackage{sectiongraphic=#1}{talkthemespectrum},
+  listingcolor.code=\PassOptionsToPackage{listingcolor=#1}{themesam},
+}
+\ProcessKeyOptions[talk@sam]
+\ExplSyntaxOff
+
+\RequirePackage{themesam}
+\RequirePackage{talkthemespectrum}
+
+% white page background
+% -> for github readme or pdfpages
+\pagecolor{white}
+
+% space between headline and text
+\AddToHook{cmd/frametitle/after}{\vskip0.5cm}
+
+% start lists flush left
+\setlength\leftmargini{1em}
+\setlength\leftmarginii{2em}
+\setlength\leftmarginiii{3em}
+
+% colours
+\DeclareColor{alert}{samred}
+\DeclareColor{example}{samlgreen}
+
+\DeclareFontShape{T1}{lmss}{m}{sc}{<->ssub*xcmss/m/sc}{}
