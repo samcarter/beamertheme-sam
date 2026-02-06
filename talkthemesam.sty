@@ -23,8 +23,14 @@
 
 % start lists flush left
 \setlength\leftmargini{1em}
-\setlength\leftmarginii{2em}
-\setlength\leftmarginiii{3em}
+\setlength\leftmarginii{1.1em}
+\setlength\leftmarginiii{1em}
+\ExplSyntaxOn
+\cs_set:Npn \labelitemi   { \labelitemfont \textbullet }
+\cs_set:Npn \labelitemii  { \labelitemfont \textbullet }
+\cs_set:Npn \labelitemiii { \labelitemfont \textbullet }
+\cs_set:Npn \labelitemiv  { \labelitemfont \textbullet }
+\ExplSyntaxOff
 
 % colours
 \DeclareColor{alert}{samred}
