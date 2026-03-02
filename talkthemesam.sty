@@ -59,3 +59,15 @@
 
 % small caps font for biblatex
 \DeclareFontShape{T1}{lmss}{m}{sc}{<->ssub*xcmss/m/sc}{}
+
+% provide more templates for footline
+\ExplSyntaxOn
+\DeclareInstance { footer-element } { page } { talk } { }
+\DeclareInstance { footer-element } { totalpages } { talk } { }
+\cs_new:Npn \@page { \arabic { page } }
+\property_new:nnnn { totalpages } { shipout } { -1 }
+  { \int_use:N \g_shipout_totalpages_int }
+\AddToHook { enddocument / afterlastpage }
+  { \property_record:nn { lastpages } { totalpages } }
+\cs_new:Npn \@totalpages { \property_ref:nn { lastpages } { totalpages } }
+\ExplSyntaxOff
