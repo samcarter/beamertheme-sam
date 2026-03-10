@@ -20,6 +20,8 @@
 \institute{Institute}
 \subtitle{Subtitle}
 
+
+
 \begin{document}
 
 \maketitle
@@ -33,18 +35,20 @@
 
 \begin{frame*}
 \frametitle{Source code}
-\begin{samcode*}{}
-\documentclass{standalone}
-\usepackage{tikzducks,tikzlings}
+\begin{tcblisting}{}
+      content...
+\end{tcblisting}
 
-\begin{document}
-
-\begin{tikzpicture}
-  \duck[]
-\end{tikzpicture}
-
-\end{document}
-\end{samcode*}
+\begin{tcblisting}{
+  before lower app=\setlength{\parskip}{\bigskipamount},
+  listing and comment,
+  listing outside comment,
+  comment={%
+    some comment
+  },
+}
+content...
+\end{tcblisting}
 \end{frame*}
 
 \begin{frame}
